@@ -4,7 +4,7 @@
             <v-card-title class="headline">
                 <strong>
                     {{ stock.name }} 
-                    <small>{{ stock.price }}</small>
+                    <small>$ {{ stock.price }}</small>
                 </strong>
             </v-card-title>
         </v-card>
@@ -17,7 +17,7 @@
                 />
                 <v-btn
                     class="green darken-3 white--text"
-                    :disabled="quantity <= 0 || !Number.isInteger(quantitity)"
+                    :disabled="quantity <= 0 || !Number.isInteger(quantity)"
                     @click="buyStock"
                 >Buy</v-btn>
             </v-container>
@@ -36,12 +36,11 @@ export default {
     methods: {
         buyStock() {
             const order = {
-                stockId: this.stock.id,
-                stockPrice: this.stock.price,
+                id: this.stock.id,
+                price: this.stock.price,
                 quantitity: this.quantity,
             }
-
-            console.log(order)
+            this.$store.dispatch('buyStock', order)
             this.quantity = 0
         }
     }
