@@ -4,22 +4,26 @@
             <v-card-title class="headline">
                 <strong>
                     {{ stock.name }} 
-                    <small>$ {{ stock.price }} | Quantity: {{ stock.quantitity }}</small>
+                    <small>$ {{ stock.price }} | Quantity: {{ stock.quantity }}</small>
                 </strong>
             </v-card-title>
         </v-card>
         <v-card>
             <v-container fill-height>
                 <v-text-field
+                    :error="insufficientQuantity || !Number.isInteger(quantity)"
                     label="Quantity"
                     type="number"
                     v-model.number="quantity"
                 />
                 <v-btn
                     class="blue darken-3 white--text"
-                    :disabled="quantity <= 0 || !Number.isInteger(quantity)"
+                    :disabled="
+                        insufficientQuantity
+                        || quantity <= 0
+                        || !Number.isInteger(quantity)"
                     @click="sellStock"
-                >Sell</v-btn>
+                >{{ insufficientQuantity ? 'No Stocks' : 'Sell' }}</v-btn>
             </v-container>
         </v-card>    
     </v-flex>
@@ -33,12 +37,17 @@ export default {
             quantity: 0
         }
     },
+    computed: {
+        insufficientQuantity() {
+            return this.quantity > this.stock.quantity
+        }
+    },
     methods: {
         sellStock() {
             const order = {
                 id: this.stock.id,
                 price: this.stock.price,
-                quantitity: this.quantity,
+                quantity: this.quantity,
             }
             this.$store.dispatch('sellStock', order)
             this.quantity = 0

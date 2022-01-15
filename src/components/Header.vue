@@ -12,8 +12,12 @@
         </v-toolbar-items>
 
         <v-spacer />
-
         <v-toolbar-items>
+            <v-layout align-center>
+                <span class="text-uppercase grey--text text--darken-2">
+                    Balance: ${{ funds }}
+                </span>
+            </v-layout>
             <v-btn text>Finish Day</v-btn>
             <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
@@ -34,7 +38,11 @@
 
 <script>
 export default {
-
+    computed: {
+        funds() {
+            return this.$store.getters.funds
+        }
+    }
 }
 </script>
 
