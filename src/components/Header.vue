@@ -15,7 +15,7 @@
         <v-toolbar-items>
             <v-layout align-center>
                 <span class="text-uppercase grey--text text--darken-2">
-                    Balance: ${{ funds }}
+                    Balance: {{ funds | currency }}
                 </span>
             </v-layout>
             <v-btn text>Finish Day</v-btn>

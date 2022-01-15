@@ -4,7 +4,7 @@
             <v-card-title class="headline">
                 <strong>
                     {{ stock.name }}
-                    <small>$ {{ stock.price }}</small>
+                    <small>{{ stock.price | currency }}</small>
                 </strong>
             </v-card-title>
         </v-card>
@@ -20,7 +20,7 @@
                     class="green darken-3 white--text"
                     :disabled="insufficientFunds || quantity <= 0 || !Number.isInteger(quantity)"
                     @click="buyStock"
-                >{{ insufficientFunds ? "No funds" : "Buy Stock" }}</v-btn>
+                >{{ insufficientFunds ? "No Funds" : "Buy Stock" }}</v-btn>
             </v-container>
         </v-card>    
     </v-flex>
