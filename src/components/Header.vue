@@ -24,10 +24,10 @@
                     <v-btn v-on="on" v-bind="attrs">Save Load</v-btn>
                 </template>
                 <v-list>
-                    <v-list-item @click="1==1">
+                    <v-list-item @click="saveData">
                         <v-list-item-title>Save Data</v-list-item-title>
                     </v-list-item>
-                    <v-list-item @click="1==1">
+                    <v-list-item @click="loadRemoteData">
                         <v-list-item-title>Load Data</v-list-item-title>
                     </v-list-item>
                 </v-list>
@@ -46,9 +46,16 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['randomizeStocks']),
+        ...mapActions(['randomizeStocks', 'loadData']),
         endDay() {
             this.randomizeStocks()
+        },
+        saveData() {
+            const { funds, stockPortfolio, stocks } = this.$store.getters
+            this.$http.put('data.json', { funds, stockPortfolio, stocks })
+        },
+        loadRemoteData() {
+            this.loadData()
         }
     }
 }
