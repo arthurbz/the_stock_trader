@@ -18,7 +18,7 @@
                     Balance: {{ funds | currency }}
                 </span>
             </v-layout>
-            <v-btn text>Finish Day</v-btn>
+            <v-btn text @click="endDay">Finish Day</v-btn>
             <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn v-on="on" v-bind="attrs">Save Load</v-btn>
@@ -37,10 +37,18 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     computed: {
         funds() {
             return this.$store.getters.funds
+        }
+    },
+    methods: {
+        ...mapActions(['randomizeStocks']),
+        endDay() {
+            this.randomizeStocks()
         }
     }
 }
