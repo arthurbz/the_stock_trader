@@ -1,6 +1,14 @@
 <template>
     <v-layout row wrap>
-        <Stock v-for="stock in stocks" :key="stock.id" :stock="stock"/>
+        <v-layout v-if="haveStocks" row wrap>
+                <Stock v-for="stock in stocks" :key="stock.id" :stock="stock"/>
+        </v-layout>
+
+        <v-layout v-else>
+            <h1 class="display-3 font-weight-light mt-6">
+                You don't have any stocks at the moment!
+            </h1>   
+        </v-layout>
     </v-layout>
 </template>
 
@@ -13,7 +21,10 @@ export default {
     computed: {
         ...mapGetters({
             stocks: 'stockPortfolio'
-        })
+        }),
+        haveStocks() {
+            return this.stocks.length
+        }
     }
 }
 </script>
